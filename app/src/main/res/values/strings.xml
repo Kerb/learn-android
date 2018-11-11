@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Учимся Android</string>
+    <string name="lesson1_button">Урок 1</string>
+    <string name="lesson2_button">Урок 2</string>
+</resources>
