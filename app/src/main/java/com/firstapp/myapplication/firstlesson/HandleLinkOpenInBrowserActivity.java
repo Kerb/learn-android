@@ -26,7 +26,6 @@ public class HandleLinkOpenInBrowserActivity extends Activity {
         webView = findViewById(R.id.first_lesson_webview);
         webView.loadUrl(getIntent().getData().toString());
 
-
         Log.i("LESSON", intent.toString());
     }
 }
