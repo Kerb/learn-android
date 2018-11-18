@@ -24,6 +24,8 @@
                 <data android:scheme="https" android:host="www.sberbank.ru" android:path="/ru/about/today/oib"/>
             </intent-filter>
         </activity>
+        <activity android:name=".secondhomework.SecondHomeworkGameActivity">
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>
