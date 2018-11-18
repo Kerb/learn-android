@@ -5,4 +5,4 @@
 
 ### Домашка 2
 Написать игру "Напёрстки". Релизовать сохранение состояние игры, при смене ориентации устройства.
-[[https://github.com/Kerb/learn-android/master/misc/homework2.png|alt=homework2]]
+![homework2](https://raw.githubusercontent.com/Kerb/learn-android/master/misc/homework2.jpg)
