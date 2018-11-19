@@ -72,11 +72,11 @@ public class SecondHomeworkGameActivity extends Activity {
         // отрисовали текущее состояние
         if (opened) {
             for (int i = 0; i < imageViews.length; i++) {
-                imageViews[i].setImageResource(gameState[i] ? R.drawable.ic_water_glass_win : R.drawable.homework2_naperstok_opened_fail);
+                imageViews[i].setImageResource(gameState[i] ? R.drawable.ic_opened_full : R.drawable.ic_opened_empty);
             }
         } else {
             for (int i = 0; i < imageViews.length; i++) {
-                imageViews[i].setImageResource(R.drawable.homework2_naperstok);
+                imageViews[i].setImageResource(R.drawable.ic_closed);
             }
         }
     }
@@ -134,9 +134,9 @@ public class SecondHomeworkGameActivity extends Activity {
             ImageView imageView = (ImageView) v;
             for (int i = 0; i < imageViews.length; i++) {
                 if (gameState[i]) {
-                    imageViews[i].setImageResource(R.drawable.ic_water_glass_win);
+                    imageViews[i].setImageResource(R.drawable.ic_opened_full);
                 } else {
-                    imageViews[i].setImageResource(R.drawable.homework2_naperstok_opened_fail);
+                    imageViews[i].setImageResource(R.drawable.ic_opened_empty);
                 }
             }
 
