@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Учимся Android</string>
+
     <string name="lesson1_button">Домашка 1</string>
     <string name="lesson2_button">Домашка 2</string>
+    <string name="lesson3_button">Домашка 3</string>
+
     <string name="button_new_game">Новая игра</string>
+    <string name="homework3_start_service_button">Запуск сервиса</string>
+    <string name="homework3_start_activity_button">Запуск активити</string>
 </resources>
