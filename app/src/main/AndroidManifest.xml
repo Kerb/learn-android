@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.firstapp.myapplication">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -11,6 +13,7 @@
         <activity android:name=".EntryPointActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -19,15 +22,23 @@
         <activity android:name=".firstlesson.HandleLinkOpenInBrowserActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="https" android:host="www.sberbank.ru" android:path="/ru/about/today/oib"/>
+
+                <data
+                        android:host="www.sberbank.ru"
+                        android:path="/ru/about/today/oib"
+                        android:scheme="https"/>
             </intent-filter>
         </activity>
         <activity android:name=".secondhomework.SecondHomeworkGameActivity"/>
         <activity android:name=".thirdhomework.ServiceStarterActivity"/>
-    </application>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+        <service
+                android:name=".thirdhomework.FileRetrieverService"
+                android:exported="false">
+        </service>
+    </application>
 
 </manifest>
