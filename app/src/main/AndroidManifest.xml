@@ -34,6 +34,7 @@
         </activity>
         <activity android:name=".secondhomework.SecondHomeworkGameActivity"/>
         <activity android:name=".thirdhomework.ServiceStarterActivity"/>
+        <activity android:name=".thirdhomework.ServiceDataShowerActivity"/>
 
         <service
                 android:name=".thirdhomework.FileRetrieverService"

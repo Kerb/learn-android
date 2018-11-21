@@ -1,27 +1,25 @@
 package com.firstapp.myapplication.thirdhomework;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Messenger;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 import com.firstapp.myapplication.R;
 
-import java.lang.ref.WeakReference;
 import java.util.Random;
 
 /**
  * Домашка №3:
- *
+ * <p>
  * Активити с 2мя кнопками.
- *
+ * <p>
  * 1я кнопка - запускает сервис, который что-то делает (в моем случае качает файл)
  * 2я кнопка - запускает активити, которая привязывается к сервису, и выводит все, что получает
  */
@@ -61,86 +59,79 @@ public class ServiceStarterActivity extends Activity {
     private Random random = new Random();
 
     /**
-     * Мессенджер, который ловит результаты выполнения вызова сервиса
-     * TODO: Как обрабатывать кейс: Если activity была скрыта, и мы не хотим показывать toast-ы?
+     * Сервис загрузки файлов
      */
-    private Messenger messenger = new Messenger(new IncomingHandler(this));
+    private FileRetrieverService.LocalBinder fileRetrieverBinder;
 
-    /**
-     * Хэндлер для обработки сообщений от сервиса о результатах работы, напр. файл скачался успешно.
-     *
-     * Без static ругался на то, что возможны утечки памяти, из-за того, что inner-class содержит неявную
-     * ссылку на его enclosing-class.
-     *
-     * На SO рекомендуют делать его static и прокидывать активити как weak-reference.
-     */
-    public static class IncomingHandler extends Handler {
+    private FileDownloadResultBroadcastReceiver fileDownloadBroadcastReceiver = new FileDownloadResultBroadcastReceiver();
 
-        private WeakReference<ServiceStarterActivity> ref;
-
-        public IncomingHandler(ServiceStarterActivity serviceStarterActivity) {
-            this.ref = new WeakReference<>(serviceStarterActivity);
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            fileRetrieverBinder = (FileRetrieverService.LocalBinder) service;
+            Log.i(TAG, ">> onServiceConnected " + Thread.currentThread().getName() + " Connected to service");
         }
 
         @Override
-        public void handleMessage(Message msg) {
-            ServiceStarterActivity activity = ref.get();
-            if (activity != null) {
-                final Bundle data = msg.getData();
-                switch (msg.what) {
-                    case ConstantsHomework3.FILE_DOWNLOADED:
-                        if (data != null) {
-                            final String downloadedFile = data.getString(ConstantsHomework3.FILE_NAME);
-
-                            Toast.makeText(activity, "Скачивание файла завершено. Сохранен в " + downloadedFile, Toast.LENGTH_SHORT)
-                                .show();
-                            activity.loadImage(downloadedFile);
-                        }
-                        break;
-                    case ConstantsHomework3.FILE_NOT_DOWNLOADED:
-                        Toast.makeText(activity, "Ошибка при закачивании файла", Toast.LENGTH_SHORT)
-                            .show();
-                        break;
-                }
-                Log.i(TAG, data != null ? data.toString() : null);
-            }
+        public void onServiceDisconnected(ComponentName name) {
+            fileRetrieverBinder = null;
+            Log.i(TAG, ">> onServiceDisconnected " + Thread.currentThread().getName() + " disconnected from service");
         }
-    }
+    };
 
     /**
      * Подвязка всех компонентов в рантайме
      */
-    private void bindUI() {
+    private void initializeUIComponents() {
         startServiceButton = findViewById(R.id.homework3_start_service_button);
         startServiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FileRetrieverService.submitDownloadFileTask(
-                    ServiceStarterActivity.this,
-                    imageUrls[random.nextInt(imageUrls.length)],
-                    messenger);
+                if (fileRetrieverBinder != null) {
+                    fileRetrieverBinder.getService().submitDownloadFileTask(
+                        ServiceStarterActivity.this,
+                        imageUrls[random.nextInt(imageUrls.length)]);
+
+                }
             }
         });
 
         startActivityButton = findViewById(R.id.homework3_start_activity_button);
+        startActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ServiceStarterActivity.this, ServiceDataShowerActivity.class);
+                startActivity(intent);
+            }
+        });
         imageView = findViewById(R.id.homework3_image);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Intent intent = new Intent(this, FileRetrieverService.class);
+        bindService(intent, serviceConnection, BIND_AUTO_CREATE);
+
+        // TODO не очень красиво каждый раз тут сетить Image. Узнать как сделать красиво
+        fileDownloadBroadcastReceiver.setImage(imageView);
+        registerReceiver(fileDownloadBroadcastReceiver, FileDownloadResultBroadcastReceiver.createIntentFilter());
+        Log.i(TAG, ">> onResume, bindService, registerReceiver");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        unbindService(serviceConnection);
+        unregisterReceiver(fileDownloadBroadcastReceiver);
+        Log.i(TAG, ">> unbindService, unbindService, unregisterReceiver");
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_starter);
-        bindUI();
+        initializeUIComponents();
     }
 
     /**
