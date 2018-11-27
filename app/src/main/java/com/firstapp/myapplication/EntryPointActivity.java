@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import com.firstapp.myapplication.firstlesson.StartWithExplicitEventActivity;
+import com.firstapp.myapplication.fragments.FragmentFirstActivity;
 import com.firstapp.myapplication.secondhomework.SecondHomeworkGameActivity;
 import com.firstapp.myapplication.thirdhomework.ServiceStarterActivity;
 
@@ -16,16 +18,18 @@ public class EntryPointActivity extends Activity {
     /**
      * Урок 1: явный запуск активити
      */
-    private View firstLessonButton;
+    private Button firstLessonButton;
     /**
      * Домашка 2: запуск игры "Пятнашки"
      */
-    private View secondHomeworkGameButton;
+    private Button secondHomeworkGameButton;
 
     /**
      * Домашка 3: запуск сервиса, и активити, которая его слушает
      */
-    private View thirdHomeworkServiceStarterButton;
+    private Button thirdHomeworkServiceStarterButton;
+
+    private Button fragmentsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,18 @@ public class EntryPointActivity extends Activity {
         configureFirstHomeworkButton();
         configureSecondHomeworkButton();
         configureThirdHomeworkButton();
+        configureFragmentsButton();
+    }
+
+    private void configureFragmentsButton() {
+        fragmentsButton = findViewById(R.id.fragments_activity_button);
+        fragmentsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EntryPointActivity.this, FragmentFirstActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void configureFirstHomeworkButton() {

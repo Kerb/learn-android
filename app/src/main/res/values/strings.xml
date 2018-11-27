@@ -8,4 +8,5 @@
     <string name="button_new_game">Новая игра</string>
     <string name="homework3_start_service_button_text">Запуск сервиса</string>
     <string name="homework3_start_activity_button_text">Запуск активити</string>
+    <string name="fragments_button_text">Поиграть с фрагментами</string>
 </resources>
