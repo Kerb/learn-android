@@ -4,6 +4,7 @@
     <string name="lesson1_button">Домашка 1</string>
     <string name="lesson2_button">Домашка 2</string>
     <string name="lesson3_button">Домашка 3</string>
+    <string name="lesson4_button">Домашка 4</string>
 
     <string name="button_new_game">Новая игра</string>
     <string name="homework3_start_service_button_text">Запуск сервиса</string>

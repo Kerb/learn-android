@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import com.firstapp.myapplication.firstlesson.StartWithExplicitEventActivity;
+import com.firstapp.myapplication.fourthhomework.StateMachineActivity;
 import com.firstapp.myapplication.fragments.FragmentFirstActivity;
 import com.firstapp.myapplication.secondhomework.SecondHomeworkGameActivity;
 import com.firstapp.myapplication.thirdhomework.ServiceStarterActivity;
@@ -29,6 +30,11 @@ public class EntryPointActivity extends Activity {
      */
     private Button thirdHomeworkServiceStarterButton;
 
+    /**
+     * Домашка 4: сервис и стэйт-машина
+     */
+    private Button fourthHomeworkButton;
+
     private Button fragmentsButton;
 
     @Override
@@ -39,7 +45,19 @@ public class EntryPointActivity extends Activity {
         configureFirstHomeworkButton();
         configureSecondHomeworkButton();
         configureThirdHomeworkButton();
+        configureFourthButton();
         configureFragmentsButton();
+    }
+
+    private void configureFourthButton() {
+        fourthHomeworkButton = findViewById(R.id.fourth_homework_button);
+        fourthHomeworkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EntryPointActivity.this, StateMachineActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void configureFragmentsButton() {

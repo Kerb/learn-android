@@ -69,13 +69,13 @@ public class ServiceStarterActivity extends Activity {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             fileRetrieverBinder = (FileRetrieverService.LocalBinder) service;
-            Logger.i(">> onServiceConnected " + Thread.currentThread().getName() + " Connected to service");
+            Logger.i(">> onServiceConnected, Connected to service");
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
             fileRetrieverBinder = null;
-            Logger.i(">> onServiceDisconnected " + Thread.currentThread().getName() + " disconnected from service");
+            Logger.i(">> onServiceDisconnected, disconnected from service");
         }
     };
 

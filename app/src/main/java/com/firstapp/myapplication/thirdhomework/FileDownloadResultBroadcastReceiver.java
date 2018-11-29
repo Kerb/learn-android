@@ -36,11 +36,11 @@ public class FileDownloadResultBroadcastReceiver extends BroadcastReceiver {
             if (success) {
                 final String fileName = intent.getStringExtra(FileRetrieverService.PARAMETER_FILE_NAME);
                 loadImage(fileName);
-                Logger.i(">> onReceive(success) Thread (" + Thread.currentThread().getName() + "), file " + fileName);
+                Logger.i(">> onReceive(success), file " + fileName);
                 Toast.makeText(context, "Загрузили " + fileName, Toast.LENGTH_SHORT)
                     .show();
             } else {
-                Logger.i(">> onReceive(error) Thread (" + Thread.currentThread().getName() + ")");
+                Logger.i(">> onReceive(error)");
                 Toast.makeText(context, "Ошибка закачки файла", Toast.LENGTH_SHORT)
                     .show();
             }

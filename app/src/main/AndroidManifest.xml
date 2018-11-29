@@ -36,11 +36,14 @@
         <activity android:name=".thirdhomework.ServiceStarterActivity"/>
         <activity android:name=".thirdhomework.ServiceDataShowerActivity"/>
         <activity android:name=".fragments.FragmentFirstActivity"/>
+        <activity android:name=".fourthhomework.StateMachineActivity"/>
 
         <service
                 android:name=".thirdhomework.FileRetrieverService"
                 android:exported="false">
         </service>
+
+        <service android:name=".fourthhomework.SwitchStateService" android:exported="false"/>
     </application>
 
 </manifest>

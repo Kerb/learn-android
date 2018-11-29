@@ -75,7 +75,7 @@ public class FileRetrieverService extends IntentService {
      * Оповещаем о результате работа джобы
      */
     private void notifyFileDownloadResult(boolean result, String fileName) {
-        Logger.i(">>notifyFileDownloadResult Thread (" + Thread.currentThread().getName() + ") result: " + result + " fileName " + fileName);
+        Logger.i(">>notifyFileDownloadResult, result: " + result + " fileName " + fileName);
         Intent resultIntent = new Intent(ACTION_FILE_DOWNLOADED);
         resultIntent.putExtra(PARAMETER_RESULT, result);
         resultIntent.putExtra(PARAMETER_FILE_NAME, fileName);
@@ -88,7 +88,7 @@ public class FileRetrieverService extends IntentService {
     private String doDownload(String url) throws IOException {
         final String jobID = UUID.randomUUID().toString();
         try {
-            Logger.d("doDownload START >> Thread (" + Thread.currentThread().getName() + "/jobID=" + jobID + ") starting download " + url);
+            Logger.d("doDownload START >> jobID=" + jobID + ") starting download " + url);
 
             File tempFile = File.createTempFile("pref", ".tmp");
             try (final InputStream is = new URL(url).openStream();
@@ -103,7 +103,7 @@ public class FileRetrieverService extends IntentService {
                 return tempFile.getAbsolutePath();
             }
         } finally {
-            Logger.d("doDownload DONE >> Thread (" + Thread.currentThread().getName() + "/jobID=" + jobID + ") done ");
+            Logger.d("doDownload DONE >> jobID=" + jobID + ") done ");
         }
     }
 
