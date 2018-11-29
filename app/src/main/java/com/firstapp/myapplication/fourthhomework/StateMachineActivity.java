@@ -108,8 +108,14 @@ public class StateMachineActivity extends Activity {
         public void handleMessage(Message msg) {
             final StateMachineActivity activityValue = activity.get();
             if (activityValue != null) {
-                Logger.i("Получили сообщение " + msg);
-                Toast.makeText(activityValue, "Получили сообщение!" + msg, Toast.LENGTH_SHORT).show();
+                switch (msg.what) {
+                    case SwitchStateService.CURRENT_STATE:
+                        Toast.makeText(activityValue, "Получили сообщение: " + msg.obj, Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Toast.makeText(activityValue, "Получили неизвестное соощение " + msg.obj, Toast.LENGTH_SHORT).show();
+                }
+
             }
         }
     }

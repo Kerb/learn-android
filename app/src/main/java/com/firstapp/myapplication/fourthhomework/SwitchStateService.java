@@ -24,9 +24,7 @@ public class SwitchStateService extends Service implements SafeStateSwitcher {
     /**
      * Узнать текущее состояние
      */
-    public static final int GET_STATE = 2;
-
-    public static final int PONG = 3;
+    public static final int CURRENT_STATE = 2;
 
     /**
      * Текущее состояние стейт-машины
@@ -89,13 +87,14 @@ public class SwitchStateService extends Service implements SafeStateSwitcher {
             new Thread() {
                 @Override
                 public void run() {
-                    com.firstapp.myapplication.fourthhomework.State current = safeStateSwitcher.safelyGetState();
-                    com.firstapp.myapplication.fourthhomework.State next = safeStateSwitcher.safelyChangeState();
-                    Logger.i("%s выполнили переход %s -> %s", msg, current, next);
+                    com.firstapp.myapplication.fourthhomework.State oldState = safeStateSwitcher.safelyGetState();
+                    com.firstapp.myapplication.fourthhomework.State newState = safeStateSwitcher.safelyChangeState();
+                    Logger.i("%s выполнили переход %s -> %s", msg, oldState, newState);
 
-                    final Message pong = Message.obtain(null, PONG);
+                    final Message replyMessage = Message.obtain(null, CURRENT_STATE);
+                    replyMessage.obj = oldState + " -> " + newState;
                     try {
-                        replyBackMessenger.send(pong);
+                        replyBackMessenger.send(replyMessage);
                     } catch (RemoteException e) {
                         throw new RuntimeException(e.getMessage(), e);
                     }
