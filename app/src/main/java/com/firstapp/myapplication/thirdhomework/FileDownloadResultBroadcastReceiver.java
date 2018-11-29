@@ -5,9 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
+import com.orhanobut.logger.Logger;
 
 /**
  * Ресивер, получающий уведомление, о результатах закачки файла.
@@ -36,11 +36,11 @@ public class FileDownloadResultBroadcastReceiver extends BroadcastReceiver {
             if (success) {
                 final String fileName = intent.getStringExtra(FileRetrieverService.PARAMETER_FILE_NAME);
                 loadImage(fileName);
-                Log.i(TAG, ">> onReceive(success) Thread (" + Thread.currentThread().getName() + "), file " + fileName);
+                Logger.i(">> onReceive(success) Thread (" + Thread.currentThread().getName() + "), file " + fileName);
                 Toast.makeText(context, "Загрузили " + fileName, Toast.LENGTH_SHORT)
                     .show();
             } else {
-                Log.i(TAG, ">> onReceive(error) Thread (" + Thread.currentThread().getName() + ")");
+                Logger.i(">> onReceive(error) Thread (" + Thread.currentThread().getName() + ")");
                 Toast.makeText(context, "Ошибка закачки файла", Toast.LENGTH_SHORT)
                     .show();
             }
@@ -53,7 +53,7 @@ public class FileDownloadResultBroadcastReceiver extends BroadcastReceiver {
      * Загружает картинку из локаьного файла и показывает в ImageView
      */
     private void loadImage(String filePath) {
-        Log.d(TAG, "image = " + image + " show " + filePath);
+        Logger.d(TAG, "image = " + image + " show " + filePath);
         if (image != null) {
             image.setImageBitmap(BitmapFactory.decodeFile(filePath));
         }

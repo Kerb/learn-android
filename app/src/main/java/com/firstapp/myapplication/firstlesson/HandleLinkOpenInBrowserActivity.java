@@ -3,9 +3,9 @@ package com.firstapp.myapplication.firstlesson;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.webkit.WebView;
 import com.firstapp.myapplication.R;
+import com.orhanobut.logger.Logger;
 
 /**
  * Перехватывает ссылку из стандартного браузера и открывает в WebView в данной activity.
@@ -26,6 +26,6 @@ public class HandleLinkOpenInBrowserActivity extends Activity {
         webView = findViewById(R.id.first_lesson_webview);
         webView.loadUrl(getIntent().getData().toString());
 
-        Log.i("LESSON", intent.toString());
+        Logger.i("LESSON", intent.toString());
     }
 }

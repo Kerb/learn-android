@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -64,7 +64,7 @@ public class FileRetrieverService extends IntentService {
                         notifyFileDownloadResult(true, downloadedFileName);
                     } catch (IOException e) {
                         notifyFileDownloadResult(true, null);
-                        Log.e(TAG, "Ошибка: " + e.getMessage(), e);
+                        Logger.e("Ошибка: " + e.getMessage(), e);
                     }
                     break;
             }
@@ -75,7 +75,7 @@ public class FileRetrieverService extends IntentService {
      * Оповещаем о результате работа джобы
      */
     private void notifyFileDownloadResult(boolean result, String fileName) {
-        Log.i(TAG, ">>notifyFileDownloadResult Thread (" + Thread.currentThread().getName() + ") result: " + result + " fileName " + fileName);
+        Logger.i(">>notifyFileDownloadResult Thread (" + Thread.currentThread().getName() + ") result: " + result + " fileName " + fileName);
         Intent resultIntent = new Intent(ACTION_FILE_DOWNLOADED);
         resultIntent.putExtra(PARAMETER_RESULT, result);
         resultIntent.putExtra(PARAMETER_FILE_NAME, fileName);
@@ -88,7 +88,7 @@ public class FileRetrieverService extends IntentService {
     private String doDownload(String url) throws IOException {
         final String jobID = UUID.randomUUID().toString();
         try {
-            Log.d(TAG, "doDownload START >> Thread (" + Thread.currentThread().getName() + "/jobID=" + jobID + ") starting download " + url);
+            Logger.d("doDownload START >> Thread (" + Thread.currentThread().getName() + "/jobID=" + jobID + ") starting download " + url);
 
             File tempFile = File.createTempFile("pref", ".tmp");
             try (final InputStream is = new URL(url).openStream();
@@ -103,7 +103,7 @@ public class FileRetrieverService extends IntentService {
                 return tempFile.getAbsolutePath();
             }
         } finally {
-            Log.d(TAG, "doDownload DONE >> Thread (" + Thread.currentThread().getName() + "/jobID=" + jobID + ") done ");
+            Logger.d("doDownload DONE >> Thread (" + Thread.currentThread().getName() + "/jobID=" + jobID + ") done ");
         }
     }
 
@@ -112,7 +112,7 @@ public class FileRetrieverService extends IntentService {
      */
     @Override
     public IBinder onBind(Intent intent) {
-        Log.i(TAG, ">> onBind " + intent.toString());
+        Logger.i(TAG, ">> onBind " + intent.toString());
         return localBinder;
     }
 

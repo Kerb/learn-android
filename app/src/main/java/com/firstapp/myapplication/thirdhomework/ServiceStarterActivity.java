@@ -7,11 +7,11 @@ import android.content.ServiceConnection;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import com.firstapp.myapplication.R;
+import com.orhanobut.logger.Logger;
 
 import java.util.Random;
 
@@ -69,13 +69,13 @@ public class ServiceStarterActivity extends Activity {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             fileRetrieverBinder = (FileRetrieverService.LocalBinder) service;
-            Log.i(TAG, ">> onServiceConnected " + Thread.currentThread().getName() + " Connected to service");
+            Logger.i(">> onServiceConnected " + Thread.currentThread().getName() + " Connected to service");
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
             fileRetrieverBinder = null;
-            Log.i(TAG, ">> onServiceDisconnected " + Thread.currentThread().getName() + " disconnected from service");
+            Logger.i(">> onServiceDisconnected " + Thread.currentThread().getName() + " disconnected from service");
         }
     };
 
@@ -116,7 +116,7 @@ public class ServiceStarterActivity extends Activity {
         // TODO не очень красиво каждый раз тут сетить Image. Узнать как сделать красиво
         fileDownloadBroadcastReceiver.setImage(imageView);
         registerReceiver(fileDownloadBroadcastReceiver, FileDownloadResultBroadcastReceiver.createIntentFilter());
-        Log.i(TAG, ">> onResume, bindService, registerReceiver");
+        Logger.i(">> onResume, bindService, registerReceiver");
     }
 
     @Override
@@ -124,7 +124,7 @@ public class ServiceStarterActivity extends Activity {
         super.onPause();
         unbindService(serviceConnection);
         unregisterReceiver(fileDownloadBroadcastReceiver);
-        Log.i(TAG, ">> unbindService, unbindService, unregisterReceiver");
+        Logger.i(">> unbindService, unbindService, unregisterReceiver");
     }
 
     @Override

@@ -1,20 +1,15 @@
 package com.firstapp.myapplication.secondhomework;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.firstapp.myapplication.R;
+import com.orhanobut.logger.Logger;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
-
-import static android.net.http.SslCertificate.restoreState;
 
 /**
  * Игра "Напёрстки"
@@ -106,7 +101,7 @@ public class SecondHomeworkGameActivity extends Activity {
         opened = false;
         // генерируем стакан, под которым
         final int winIndex = random.nextInt(2);
-        Log.d(TAG, "Выигрышный стакан: " + winIndex);
+        Logger.d("Выигрышный стакан: " + winIndex);
         for (int i = 0; i < 3; i++) {
             gameState[i] = (winIndex == i);
         }
